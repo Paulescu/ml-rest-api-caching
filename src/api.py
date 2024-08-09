@@ -1,8 +1,8 @@
-from datetime import datetime, timezone
-import logging
+import os
 
-from loguru import logger
 from fastapi import FastAPI
+from loguru import logger
+from pydantic import BaseModel
 
 from src.predictor import Predictor
 
@@ -10,22 +10,24 @@ from src.predictor import Predictor
 app = FastAPI()
 predictor = Predictor()
 
-import os
-USE_CACHE = os.getenv("USE_CACHE", False)
-logger.info(f"USE_CACHE: {USE_CACHE}")
+USE_CACHE = os.getenv('USE_CACHE', False)
+logger.info(f'USE_CACHE: {USE_CACHE}')
 if USE_CACHE:
     from src.cache import PredictorCache
+
     cache = PredictorCache(seconds_to_invalidate_prediction=5)
 
-@app.get("/health")
-def health():
-    return {"status": "OK"}
 
-from pydantic import BaseModel
+@app.get('/health')
+def health():
+    return {'status': 'OK'}
+
+
 class PredictRequest(BaseModel):
     product_id: str
 
-@app.post("/predict")
+
+@app.post('/predict')
 def predict(request: PredictRequest):
     """
     Endpoint to make a prediction for a given product id

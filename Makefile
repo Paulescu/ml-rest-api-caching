@@ -24,3 +24,12 @@ start-redis:
 stop-redis:
 	@echo "Stopping Redis"
 	docker compose -f redis.yml down
+
+# Code linting and formatting
+lint:
+	poetry run ruff check --fix
+
+format:
+	poetry run ruff format .
+
+lint-and-format: lint format
