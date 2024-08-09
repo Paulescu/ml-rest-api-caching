@@ -7,7 +7,7 @@
 * [The problem](#the-problem)
 * [Solution](#solution)
 * [Run the whole thing in 5 minutes](#run-the-whole-thing-in-5-minutes)
-* [Wanna learn more real-time ML?](#wanna-learn-more-real-time-ml)
+* [Wanna learn more real-world ML?](#wanna-learn-more-real-world-ml)
 
 
 ## The problem
@@ -15,10 +15,9 @@
 A very common way to deploy an ML model, and make its predictions accessible to other services, is by using a REST API.
 
 It works as follows:
-1. The client requests a prediction -> 
-   *Give me the price of ETH/EUR in the next 5 minutes*
-2. The ML model generate the prediction,
-3. The prediction is sent back to the client -> `predicted price = 2,300 USD`
+1. The client requests a prediction -> *Give me the price of ETH/EUR in the next 5 minutes*
+2. The ML model generates the prediction,
+3. The prediction is sent back to the client -> *predicted price = 2,300 USD*
 
 <div align="center">
     <h3>REST API from your textbook 🐢</h3>
@@ -33,11 +32,11 @@ Because more often than not, your ML model will re-compute the exact same predic
 
 So you will be doing the same (costly) work more than once.
 
-This can become a serious bottleneck if your model is large, like a Large Language Model.
+This become a serious bottleneck if the request volume grows, and you model is large, like a Large Language Model.
 
 So the question is:
 
-> Is there a way to avoid re-computing costly predictions?
+> Is there a way to avoid re-computing costly predictions? 🤔
 
 And the answer is … YES!
 
@@ -48,7 +47,7 @@ Caching is a standard technique to speed up API response time.
 The idea is very simple. You add a fast key-value pair database to your system, for example Redis, and use it to store past predictions.
 
 When the first request hits the API, your cache is still empty, so you
-* genearte a new prediction with your ML model
+* generate a new prediction with your ML model
 * store it in the cache, as a key-value pair, and
 * return it to the client
 
@@ -70,7 +69,9 @@ Now, when the second request arrives, you can simply
 
 To ensure the predictions stored in your cache are still relevant, you can set an expiry date. Whenever a prediction in the cache gets too old, it is replaced by a newly generate prediction.
 
-For example, if your underlying ML model is generating price predictions 5 minutes into the future, you can tolerate predictions that are up to, for example, 1-2 minutes old.
+> **For example**
+> 
+> If your underlying ML model is generating price predictions 5 minutes into the future, you can tolerate predictions that are up to, for example, 1-2 minutes old.
 
 
 ## Run the whole thing in 5 minutes
