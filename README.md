@@ -97,6 +97,10 @@ To ensure the predictions stored in your cache are still relevant, you can set a
     Time taken: 1013.05ms
     Time taken: 1011.15ms
     Time taken: 1004.31ms
+    Time taken: 1017.23ms
+    Time taken: 1011.73ms
+    Time taken: 1009.76ms
+    Time taken: 1011.26ms
     ...
     ```
 
@@ -104,8 +108,25 @@ To ensure the predictions stored in your cache are still relevant, you can set a
     ```
     $ make api-with-cache
     ```
-    and resend the 100 requests. The response time for the first request is still high, but 100x faster for the the following requests.
-
+    and resend the 100 requests. The response time for the first request is still high, but 100x faster for most of the the following requests.
+    ```
+    Time taken: 1029.59ms <-- new prediction
+    Time taken: 13.09ms <-- very fast
+    Time taken: 8.47ms <-- very fast
+    Time taken: 7.74ms <-- very fast
+    Time taken: 12.98ms <-- very fast
+    Time taken: 1020.92ms <-- new prediction
+    Time taken: 8.40ms <-- very fast
+    Time taken: 12.61ms <-- very fast
+    Time taken: 10.55ms <-- very fast
+    ```
+    
+    In the code I am setting the cache expiry to `5 seconds`.
+    ```
+    # src/api.py
+    cache = PredictorCache(seconds_to_invalidate_prediction=5)
+    ```
+    This is a parameter that you can tune based on how fast your ML model predictions become obsolete.
 
 ## Wanna learn more real-world ML?
 
