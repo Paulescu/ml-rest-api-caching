@@ -12,7 +12,7 @@ api-without-cache:
 	@echo "Running API without cache"
 	poetry run uvicorn src.api:app --reload
 
-api-with-cache:
+api-with-cache: start-redis
 	@echo "Running API with cache"
 	poetry run uvicorn src.api:app --reload --env-file .cache.env
 

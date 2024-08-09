@@ -108,7 +108,11 @@ To ensure the predictions stored in your cache are still relevant, you can set a
     ```
     $ make api-with-cache
     ```
-    and resend the 100 requests. The response time for the first request is still high, but 100x faster for most of the the following requests.
+    and resend the 100 requests from another terminal
+    ```
+    $ make requests
+    ```
+    The response time for the first request is still high, but 100x faster for most of the the following requests.
     ```
     Time taken: 1029.59ms <-- new prediction
     Time taken: 13.09ms <-- very fast
